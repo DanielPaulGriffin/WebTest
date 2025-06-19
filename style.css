@@ -1,30 +1,31 @@
-body {
+* {
     margin: 0;
-    background: #0a0a20;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow: hidden;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-#game-container {
-    position: relative;
+body {
+    overflow: hidden;
+    background: #000;
+    font-family: 'Orbitron', sans-serif;
 }
 
 #gameCanvas {
-    background: linear-gradient(to bottom, #1a1a40, #0d0d26);
-    border-radius: 8px;
-    box-shadow: 0 0 30px rgba(100, 200, 255, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
 }
 
 #ui-overlay {
-    position: absolute;
+    position: fixed;
     top: 20px;
-    right: 30px;
-    color: #fff;
-    font-size: 24px;
+    right: 20px;
+    z-index: 2;
+    color: #00ffea;
+    font-size: 1.5rem;
     text-shadow: 0 0 10px #00f3ff;
     display: flex;
     align-items: center;
@@ -32,17 +33,49 @@ body {
 }
 
 #start-btn {
-    background: linear-gradient(to bottom, #ff6b6b, #ff0000);
-    border: none;
-    padding: 12px 24px;
-    border-radius: 30px;
+    background: rgba(255, 50, 50, 0.7);
+    border: 2px solid #ff0000;
+    padding: 10px 20px;
+    border-radius: 5px;
     color: white;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-    transition: transform 0.2s;
+    transition: all 0.3s;
+    font-family: 'Orbitron', sans-serif;
 }
 
 #start-btn:hover {
-    transform: scale(1.05);
+    background: rgba(255, 0, 0, 0.9);
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+}
+
+/* Mobile controls */
+#controls {
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    display: none;
+    justify-content: center;
+    gap: 20px;
+    z-index: 2;
+}
+
+.control-btn {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: white;
+    user-select: none;
+}
+
+@media (max-width: 768px) {
+    #controls {
+        display: flex;
+    }
 }
