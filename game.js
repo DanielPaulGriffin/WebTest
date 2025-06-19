@@ -19,6 +19,8 @@ resizeCanvas();
 const rocket = {
     x: canvas.width / 2,
     y: canvas.height / 2,
+    mx: 0,//Momentum xy
+    my: 0,
     width: 30,
     height: 50,
     speed: 6,
@@ -167,8 +169,15 @@ function update() {
     
     // Movement (direction-sensitive)
     if (keys['ArrowUp']) {
-        rocket.x -= Math.sin(rocket.rotation) * rocket.speed;
-        rocket.y += Math.cos(rocket.rotation) * rocket.speed;
+        rocket.my+=.2;
+    }
+    
+    //GRAVITY
+    rocket.my -=.05;
+    
+    //Move Rocket
+    rocket.x -= Math.sin(rocket.rotation) * rocket.speed*rocket.mx;
+    rocket.y -= Math.cos(rocket.rotation) * rocket.speed*rocket.my;
         
         // Move stars for parallax effect
         stars.forEach(star => {
@@ -181,7 +190,6 @@ function update() {
             if (star.y < 0) star.y = canvas.height;
             if (star.y > canvas.height) star.y = 0;
         });
-    }
     
     // Screen wrapping
     if (rocket.x < -rocket.width) rocket.x = canvas.width + rocket.width;
