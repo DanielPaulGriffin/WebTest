@@ -8,8 +8,8 @@ const startButton = document.getElementById('start-btn');
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    rocket.x = canvas.width / 2;
-    rocket.y = canvas.height / 2;
+    //rocket.x = canvas.width / 2;
+   // rocket.y = canvas.height / 2;
 }
 
 window.addEventListener('resize', resizeCanvas);
