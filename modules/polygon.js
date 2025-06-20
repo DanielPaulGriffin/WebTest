@@ -1,7 +1,12 @@
 import { transform } from './camera.js';
 
+// Define the lineColor variable at the top of the file
+export const lineColor = '#484848';
+//'#484848' - grey
+//'#16f110' - green
+
 export class Polygon {
-    constructor(points, color = '#16f110', offset = {x: 2000, y: 2000}) {
+    constructor(points, color = lineColor, offset = {x: 2000, y: 2000}) {
         this.points = points;
         this.color = color;
         this.offset = offset;
