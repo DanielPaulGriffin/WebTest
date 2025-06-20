@@ -31,12 +31,7 @@ let lastTimestamp = 0;
 // Start game
 startButton.addEventListener('click', () => {
     if (!gameRunning) {
-        gameRunning = true;
-        startButton.textContent = 'Restart Game';
-        rocket.score = 0;
-        scoreElement.textContent = rocket.score;
-        lastTimestamp = performance.now();
-        requestAnimationFrame(gameLoop);
+        startGame();
     } else {
     	resetGame();
         // Reset game
@@ -52,6 +47,14 @@ startButton.addEventListener('click', () => {
     }
 });
 
+function startGame(){
+	gameRunning = true;
+        startButton.textContent = 'Restart Game';
+        rocket.score = 0;
+        scoreElement.textContent = rocket.score;
+        lastTimestamp = performance.now();
+        requestAnimationFrame(gameLoop);
+}
 function resetGame(){
 	 rocket.x = 2000;
         rocket.y = 900;
@@ -63,9 +66,10 @@ function resetGame(){
         scoreElement.textContent = rocket.score;
         lastTimestamp = performance.now();
 }
+
 // Game loop
 function gameLoop(timestamp) {
-    if (!gameRunning) return;
+    if (!gameRunning) startGame();
     
     const deltaTime = timestamp - lastTimestamp;
     lastTimestamp = timestamp;
