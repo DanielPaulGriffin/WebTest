@@ -1,4 +1,4 @@
-import { initCamera, updateCamera, transform } from './modules/camera.js';
+import { camera,initCamera, updateCamera, transform } from './modules/camera.js';
 import { rocket, initRocket, updateRocket, drawRocket, createExhaustParticles } from './modules/rocket.js';
 import { createPolygons, drawPolygons } from './modules/polygon.js';
 import { createStars, drawStars } from './modules/stars.js';
@@ -7,6 +7,7 @@ import { initControls, keys } from './modules/controls.js';
 import { checkCollisions } from './modules/collision.js';
 import { resizeCanvas } from './modules/utils.js';
 import { bgColor } from './modules/colors.js';
+//import { camera } from './modules/camera.js';
 
 // Initialize canvas
 const canvas = document.getElementById('gameCanvas');
