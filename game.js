@@ -1,4 +1,4 @@
-// Initialize canvas to full screen
+// Initialize canvas
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
@@ -8,29 +8,139 @@ const startButton = document.getElementById('start-btn');
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    //rocket.x = canvas.width / 2;
-   // rocket.y = canvas.height / 2;
 }
 
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
+// Camera settings
+const camera = {
+    x: 0,
+    y: 0,
+    width: canvas.width,
+    height: canvas.height,
+    target: null,
+    
+    // Initialize camera to follow rocket
+    init: function(target) {
+        this.target = target;
+        this.x = target.x - this.width/2;
+        this.y = target.y - this.height/2;
+    },
+    
+    // Update camera position to follow target
+    update: function() {
+        if (this.target) {
+            // Smooth camera follow
+            this.x += (this.target.x - this.width/2 - this.x) * 0.05;
+            this.y += (this.target.y - this.height/2 - this.y) * 0.05;
+        }
+    },
+    
+    // Convert world coordinates to screen coordinates
+    transform: function(x, y) {
+        return {
+            x: x - this.x,
+            y: y - this.y
+        };
+    }
+};
+
 // Rocket object
 const rocket = {
-    x: canvas.width / 2,
-    y: canvas.height / 2,
-    mx: 0,//Momentum xy
+    x: 2000,  // Start in world space
+    y: 2000,
+    mx: 0,
     my: 0,
     width: 30,
     height: 50,
-    speed: 6,
+    speed: 0.04,
     rotation: 0,
     thrust: false,
-    score: 0
+    score: 0,
+    colorFlash: 0
 };
 
+// Initialize camera to follow rocket
+camera.init(rocket);
+
+// POLYGON CLASS
+class Polygon {
+    constructor(points, color = '#16f110') {
+        this.points = points;
+        this.color = color;
+        this.lineWidth = 2;
+    }
+    
+    draw() {
+        ctx.beginPath();
+        const start = camera.transform(this.points[0].x, this.points[0].y);
+        ctx.moveTo(start.x, start.y);
+        
+        for (let i = 1; i < this.points.length; i++) {
+            const point = camera.transform(this.points[i].x, this.points[i].y);
+            ctx.lineTo(point.x, point.y);
+        }
+        
+        ctx.closePath();
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = this.lineWidth;
+        ctx.stroke();
+        
+        // Fill polygon with semi-transparent color
+        ctx.fillStyle = this.color + '33'; // 20% opacity
+        ctx.fill();
+    }
+    
+    // Point-in-polygon collision detection
+    containsPoint(x, y) {
+        let inside = false;
+        for (let i = 0, j = this.points.length - 1; i < this.points.length; j = i++) {
+            const xi = this.points[i].x, yi = this.points[i].y;
+            const xj = this.points[j].x, yj = this.points[j].y;
+            
+            const intersect = ((yi > y) !== (yj > y)) &&
+                (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+            if (intersect) inside = !inside;
+        }
+        return inside;
+    }
+}
+
+// Create polygons in world space
+const polygons = [];
+const worldSize = 4000;  // Size of the game world
+
+// Generate random polygons
+for (let i = 0; i < 15; i++) {
+    const points = [];
+    const sides = Math.floor(Math.random() * 4) + 3; // 3-6 sides
+    const centerX = Math.random() * worldSize;
+    const centerY = Math.random() * worldSize;
+    const radius = 50 + Math.random() * 100;
+    
+    for (let j = 0; j < sides; j++) {
+        const angle = (j / sides) * Math.PI * 2;
+        const x = centerX + Math.cos(angle) * radius * (0.7 + Math.random() * 0.6);
+        const y = centerY + Math.sin(angle) * radius * (0.7 + Math.random() * 0.6);
+        points.push({x, y});
+    }
+    
+    polygons.push(new Polygon(points));
+}
+
+// Create stars in world space
+const stars = [];
+for (let i = 0; i < 300; i++) {
+    stars.push({
+        x: Math.random() * worldSize,
+        y: Math.random() * worldSize,
+        size: Math.random() * 3,
+        opacity: Math.random() * 0.5 + 0.3
+    });
+}
+
 const keys = {};
-const stars = createStars(200);  // More stars for full screen
 const particles = [];
 
 // Create touch controls for mobile
@@ -75,17 +185,6 @@ window.addEventListener('keyup', e => {
     if (e.key === 'ArrowUp') rocket.thrust = false;
 });
 
-// Create starfield optimized for full screen
-function createStars(count) {
-    return Array.from({ length: count }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 3,
-        speed: Math.random() * 0.5 + 0.2,
-        opacity: Math.random() * 0.5 + 0.3
-    }));
-}
-
 // Create particles for rocket exhaust
 function createParticles() {
     if (rocket.thrust) {
@@ -102,18 +201,39 @@ function createParticles() {
     }
 }
 
+// Create collision particles
+function createCollisionParticles(x, y, count) {
+    for (let i = 0; i < count; i++) {
+        particles.push({
+            x: x,
+            y: y,
+            size: Math.random() * 5 + 2,
+            speed: Math.random() * 4 + 2,
+            angle: Math.random() * Math.PI * 2,
+            life: 30
+        });
+    }
+}
+
 // Draw rocket with dynamic lighting
 function drawRocket() {
     ctx.save();
-    ctx.translate(rocket.x, rocket.y);
+    const screenPos = camera.transform(rocket.x, rocket.y);
+    ctx.translate(screenPos.x, screenPos.y);
     ctx.rotate(rocket.rotation);
     
-    // Rocket body with gradient
-    const gradient = ctx.createLinearGradient(0, -rocket.height/2, 0, rocket.height/2);
-    gradient.addColorStop(0, '#ff5e62');
-    gradient.addColorStop(1, '#ff0000');
+    // Flash red on collision
+    if (rocket.colorFlash > 0) {
+        ctx.fillStyle = '#ff0000';
+        rocket.colorFlash--;
+    } else {
+        // Normal rocket gradient
+        const gradient = ctx.createLinearGradient(0, -rocket.height/2, 0, rocket.height/2);
+        gradient.addColorStop(0, '#ff5e62');
+        gradient.addColorStop(1, '#ff0000');
+        ctx.fillStyle = gradient;
+    }
     
-    ctx.fillStyle = gradient;
     ctx.beginPath();
     ctx.moveTo(0, -rocket.height/2);
     ctx.lineTo(-rocket.width/2, rocket.height/2);
@@ -130,12 +250,13 @@ function drawRocket() {
     ctx.restore();
 }
 
-// Draw stars with parallax effect
+// Draw stars
 function drawStars() {
     stars.forEach(star => {
+        const screenPos = camera.transform(star.x, star.y);
         ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.arc(screenPos.x, screenPos.y, star.size, 0, Math.PI * 2);
         ctx.fill();
     });
 }
@@ -143,10 +264,11 @@ function drawStars() {
 // Draw particles
 function drawParticles() {
     particles.forEach((p, i) => {
-        const alpha = p.life / 20;
+        const screenPos = camera.transform(p.x, p.y);
+        const alpha = p.life / 30;
         ctx.fillStyle = `rgba(255, ${Math.floor(100 + Math.random() * 155)}, 0, ${alpha})`;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size * alpha, 0, Math.PI * 2);
+        ctx.arc(screenPos.x, screenPos.y, p.size * alpha, 0, Math.PI * 2);
         ctx.fill();
         
         // Update particle
@@ -161,6 +283,56 @@ function drawParticles() {
     });
 }
 
+// COLLISION DETECTION AND RESPONSE
+function checkCollisions() {
+    // Create collision points at rocket nose and body
+    const collisionPoints = [
+        // Nose point (front of rocket)
+        {
+            x: rocket.x + Math.sin(rocket.rotation) * (rocket.height/2),
+            y: rocket.y - Math.cos(rocket.rotation) * (rocket.height/2)
+        },
+        // Center point
+        {x: rocket.x, y: rocket.y},
+        // Left wing
+        {
+            x: rocket.x + Math.sin(rocket.rotation - Math.PI/3) * (rocket.width/2),
+            y: rocket.y - Math.cos(rocket.rotation - Math.PI/3) * (rocket.width/2)
+        },
+        // Right wing
+        {
+            x: rocket.x + Math.sin(rocket.rotation + Math.PI/3) * (rocket.width/2),
+            y: rocket.y - Math.cos(rocket.rotation + Math.PI/3) * (rocket.width/2)
+        }
+    ];
+    
+    // Check each polygon against all collision points
+    for (const poly of polygons) {
+        for (const point of collisionPoints) {
+            if (poly.containsPoint(point.x, point.y)) {
+                handleCollision(point.x, point.y);
+                return; // Only handle one collision per frame
+            }
+        }
+    }
+}
+
+function handleCollision(x, y) {
+    // Visual feedback
+    rocket.colorFlash = 10;
+    
+    // Physics response (bounce)
+    rocket.mx *= -0.7;
+    rocket.my *= -0.7;
+    
+    // Score penalty
+    rocket.score = Math.max(0, rocket.score - 5);
+    scoreElement.textContent = rocket.score;
+    
+    // Add collision particles
+    createCollisionParticles(x, y, 15);
+}
+
 // Update game state
 function update() {
     // Rotation
@@ -169,36 +341,31 @@ function update() {
     
     // Movement (direction-sensitive)
     if (keys['ArrowUp']) {
-        rocket.my+=.2;
+        rocket.mx += Math.sin(rocket.rotation) * rocket.speed;
+        rocket.my -= Math.cos(rocket.rotation) * rocket.speed;
     }
     
-    //GRAVITY
-    rocket.my -=.05;
+    // GRAVITY
+    rocket.my += 0.005;
     
-    //Move Rocket
-    rocket.x -= Math.sin(rocket.rotation) * rocket.speed*rocket.mx;
-    rocket.y -= Math.cos(rocket.rotation) * rocket.speed*rocket.my;
-        
-        // Move stars for parallax effect
-        stars.forEach(star => {
-            star.x += Math.sin(rocket.rotation) * star.speed;
-            star.y -= Math.cos(rocket.rotation) * star.speed;
-            
-            // Wrap stars around screen
-            if (star.x < 0) star.x = canvas.width;
-            if (star.x > canvas.width) star.x = 0;
-            if (star.y < 0) star.y = canvas.height;
-            if (star.y > canvas.height) star.y = 0;
-        });
+    // Move Rocket
+    rocket.x += rocket.mx;
+    rocket.y += rocket.my;
     
-    // Screen wrapping
-    if (rocket.x < -rocket.width) rocket.x = canvas.width + rocket.width;
-    if (rocket.x > canvas.width + rocket.width) rocket.x = -rocket.width;
-    if (rocket.y < -rocket.height) rocket.y = canvas.height + rocket.height;
-    if (rocket.y > canvas.height + rocket.height) rocket.y = -rocket.height;
+    // Update camera to follow rocket
+    camera.update();
+    
+    // World wrapping
+    if (rocket.x < -rocket.width) rocket.x = worldSize + rocket.width;
+    if (rocket.x > worldSize + rocket.width) rocket.x = -rocket.width;
+    if (rocket.y < -rocket.height) rocket.y = worldSize + rocket.height;
+    if (rocket.y > worldSize + rocket.height) rocket.y = -rocket.height;
     
     // Create particles
     createParticles();
+    
+    // Check for collisions
+    checkCollisions();
 }
 
 // Main render function
@@ -214,8 +381,16 @@ function render() {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
+    // Draw stars
     drawStars();
+    
+    // Draw polygons
+    polygons.forEach(poly => poly.draw());
+    
+    // Draw particles
     drawParticles();
+    
+    // Draw rocket
     drawRocket();
 }
 
