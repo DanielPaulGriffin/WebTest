@@ -49,7 +49,7 @@ const camera = {
 // Rocket object
 const rocket = {
     x: 2000,  // Start in world space
-    y: 800,
+    y: 900,
     mx: 0,
     my: 0,
     width: 30,
