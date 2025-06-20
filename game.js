@@ -226,12 +226,12 @@ function createControls() {
 // Keyboard input handling
 window.addEventListener('keydown', e => {
     keys[e.key] = true;
-    if (e.key === 'ArrowUp') rocket.thrust = true;
+    if (e.key === 'ArrowUp'||e.key === 'w') rocket.thrust = true;
 });
 
 window.addEventListener('keyup', e => {
     keys[e.key] = false;
-    if (e.key === 'ArrowUp') rocket.thrust = false;
+    if (e.key === 'ArrowUp'||e.key === 'w') rocket.thrust = false;
 });
 
 // Create particles for rocket exhaust
@@ -376,10 +376,9 @@ function handleCollision(x, y) {
 // Update game state
 function update() {
     // Rotation
-    if (keys['ArrowLeft']) rocket.rotation -= 0.075;
-    if (keys['ArrowRight']) rocket.rotation += 0.075;
-    if (keys['a']) rocket.rotation -= 0.075;
-    if (keys['d']) rocket.rotation += 0.075;
+    if (keys['a']||keys['ArrowLeft']) rocket.rotation -= 0.075;
+    if (keys['d']||keys['ArrowRight']) rocket.rotation += 0.075;
+    
     
     // Movement (direction-sensitive)
     if (keys['ArrowUp']||keys['w']) {
