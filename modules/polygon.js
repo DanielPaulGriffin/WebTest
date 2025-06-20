@@ -1,7 +1,8 @@
 import { transform } from './camera.js';
+import { lineColor } from './colors.js';
 
 // Define the lineColor variable at the top of the file
-export const lineColor = '#484848';
+//export const lineColor = '#484848';
 //'#484848' - grey
 //'#16f110' - green
 

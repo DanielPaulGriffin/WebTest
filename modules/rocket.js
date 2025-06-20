@@ -1,4 +1,5 @@
 import { transform } from './camera.js';
+import { lineColor } from './colors.js'; // Add this import
 
 export const rocket = {
     x: 2000,
@@ -58,40 +59,33 @@ export function updateRocket(keys, deltaTime) {
 
 export function drawRocket(ctx) {
     const screenPos = transform(rocket.x, rocket.y);
-    
-    // Save and transform canvas
+
     ctx.save();
     ctx.translate(screenPos.x, screenPos.y);
     ctx.rotate(rocket.rotation);
-    
+
     // Flash red on collision
     if (rocket.colorFlash > 0) {
         ctx.fillStyle = '#ff0000';
         rocket.colorFlash--;
     } else {
-        ctx.fillStyle = '#16f110';
+        ctx.fillStyle = lineColor; // Use shared color
     }
-    
+
     // Draw rocket body
     ctx.beginPath();
     ctx.moveTo(0, -rocket.height/2);
     ctx.lineTo(-rocket.width/2, rocket.height/2);
     ctx.lineTo(rocket.width/2, rocket.height/2);
     ctx.closePath();
-    
+
     // Style and fill
-    ctx.strokeStyle = '#16f110';
+    ctx.strokeStyle = lineColor; // Use shared color
     ctx.lineWidth = 2;
     ctx.stroke();
     ctx.fillStyle = `rgba(10, 10, 10, 1)`;
     ctx.fill();
-    
-    // Draw cockpit window
-    //ctx.fillStyle = '#16f110';
-    //ctx.beginPath();
-    //ctx.arc(0, -rocket.height/4, 5, 0, Math.PI * 2);
-    //ctx.fill();
-    
+
     ctx.restore();
 }
 
