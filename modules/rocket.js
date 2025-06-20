@@ -42,7 +42,7 @@ export function updateRocket(keys, deltaTime) {
     }
     
     // Gravity
-    rocket.my += 0.005 * (deltaTime / 16);
+    rocket.my += 0.01 * (deltaTime / 16);
     
     // Move Rocket
     rocket.x += rocket.mx;

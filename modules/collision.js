@@ -24,7 +24,7 @@ export function checkCollisions(rocket, polygons, particles, scoreElement, reset
     for (const poly of polygons) {
         for (const vertex of vertices) {
             if (poly.containsPoint(vertex.x, vertex.y)) {
-            	if(poly.color = '#e4e4e4') return;
+            	if(poly.color == '#e4e4e4') return;
                 handleCollision(vertex.x, vertex.y, particles, scoreElement, resetCallback);
                 return; // Only handle one collision per frame
             }
