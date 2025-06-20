@@ -99,23 +99,9 @@ function render() {
         -camera.y * camera.scale
     );
 
-    // Now draw everything in world coordinates
-    // e.g. drawPolygons, drawParticles, drawRocket, etc.
-    // Clear screen with space gradient
-    const gradient = ctx.createRadialGradient(
-        canvas.width/2, canvas.height/2, 0,
-        canvas.width/2, canvas.height/2, Math.max(canvas.width, canvas.height)
-    );
-    gradient.addColorStop(0, '#0f0c29');
-    gradient.addColorStop(1, '#000000');
-    
-    ctx.fillStyle = bgColor;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw game objects
-    //drawStars(stars,ctx);
-    drawPolygons(levels[((currentLevel+1)%levels.length)],ctx);
-    drawParticles(particles,ctx);
+    // Draw everything in world coordinates
+    drawPolygons(levels[currentLevel], ctx);
+    drawParticles(particles, ctx);
     drawRocket(ctx);
 }
 

@@ -65,7 +65,7 @@ export function updateRocket(keys, deltaTime) {
 
 export function drawRocket(ctx) {
     ctx.save();
-    ctx.translate(rocket.x, rocket.y); // Use world coordinates directly
+    ctx.translate(rocket.x, rocket.y); // world coordinates
     ctx.rotate(rocket.rotation);
 
     // Flash red on collision
