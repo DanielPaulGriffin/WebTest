@@ -76,7 +76,7 @@ export function createPolygons() {
     {x: 688, y: 250},
     {x: 688, y: 350},
     {x: 400, y: 350}
-], '#e4e4e4'));
+], '#e4e4e4'),{x: 400, y: 350});
     return polygons;
 }
 
