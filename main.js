@@ -27,7 +27,7 @@ initControls();
 // Game state
 let gameRunning = false;
 let lastTimestamp = 0;
-
+startGame();
 // Start game
 startButton.addEventListener('click', () => {
     if (!gameRunning) {
@@ -73,7 +73,7 @@ function gameLoop(timestamp) {
     
     const deltaTime = timestamp - lastTimestamp;
     lastTimestamp = timestamp;
-    startGame();
+    
     // Update game state
     updateRocket(keys, deltaTime);
     updateCamera(rocket);
