@@ -71,6 +71,12 @@ export function createPolygons() {
         {x: 5442, y: -483}, {x: 5490, y: 3589}, {x: -3590, y: 3613}
     ]));
     
+    polygons.push(new Polygon([
+    {x: 400, y: 250},
+    {x: 688, y: 250},
+    {x: 688, y: 350},
+    {x: 400, y: 350}
+], '#e4e4e4'));
     return polygons;
 }
 
