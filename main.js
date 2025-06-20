@@ -74,7 +74,7 @@ function gameLoop(timestamp) {
     updateParticles(particles);
     
     // Check collisions
-    checkCollisions(rocket, levels[currentLevel%levels.length], particles, scoreElement,resetGame,levelWon);
+    checkCollisions(rocket, levels[(currentLevel%levels.length)-1], particles, scoreElement,resetGame,levelWon);
     
     // Increase score over time
     rocket.score += deltaTime * 0.001;
