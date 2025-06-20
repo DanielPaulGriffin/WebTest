@@ -1,7 +1,6 @@
-import { rocket } from './rocket.js';
 import { createCollisionParticles } from './particles.js';
 
-export function checkCollisions(rocket, polygons, particles, scoreElement) {
+export function checkCollisions(rocket, polygons, particles, scoreElement, resetCallback) {
     // Calculate rocket vertices
     const vertices = [
         // Nose (top vertex)
@@ -25,25 +24,19 @@ export function checkCollisions(rocket, polygons, particles, scoreElement) {
     for (const poly of polygons) {
         for (const vertex of vertices) {
             if (poly.containsPoint(vertex.x, vertex.y)) {
-                handleCollision(vertex.x, vertex.y, particles, scoreElement);
+                handleCollision(vertex.x, vertex.y, particles, scoreElement, resetCallback);
                 return; // Only handle one collision per frame
             }
         }
     }
 }
 
-function handleCollision(x, y, particles, scoreElement) {
-    // Visual feedback
-    rocket.colorFlash = 10;
-    
-    // Physics response (bounce)
-    rocket.mx *= -0.7;
-    rocket.my *= -0.7;
-    
-    // Score penalty
-    rocket.score = Math.max(0, rocket.score - 5);
-    scoreElement.textContent = Math.floor(rocket.score);
-    
-    // Add collision particles
+function handleCollision(x, y, particles, scoreElement, resetCallback) {
+    // Create collision particles
     createCollisionParticles(x, y, 15);
+    
+    // Call the reset callback from main.js
+    if (resetCallback && typeof resetCallback === 'function') {
+        resetCallback();
+    }
 }

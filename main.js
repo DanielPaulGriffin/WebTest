@@ -33,17 +33,7 @@ startButton.addEventListener('click', () => {
     if (!gameRunning) {
         startGame();
     } else {
-    	resetGame();
-        // Reset game
-        //rocket.x = 2000;
-        //rocket.y = 900;
-       // rocket.mx = 0;
-        //rocket.my = 0;
-       //rocket.rotation = 0;
-        //rocket.score = 0;
-        //particles.length = 0;
-        //scoreElement.textContent = rocket.score;
-       // lastTimestamp = performance.now();
+    	resetGame();       
     }
 });
 
@@ -81,7 +71,7 @@ function gameLoop(timestamp) {
     updateParticles(particles);
     
     // Check collisions
-    checkCollisions(rocket, polygons, particles, scoreElement);
+    checkCollisions(rocket, polygons, particles, scoreElement,resetGame);
     
     // Increase score over time
     rocket.score += deltaTime * 0.001;
