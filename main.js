@@ -19,7 +19,8 @@ resizeCanvas(canvas);
 
 // Initialize game objects
 initRocket();
-const polygons = createPolygons();
+const levels = createPolygons();
+let currentLevel = 0;
 const stars = createStars(300, 4000);
 initCamera(canvas.width, canvas.height, rocket);
 initControls();
@@ -39,7 +40,7 @@ startButton.addEventListener('click', () => {
 
 function startGame(){
 	gameRunning = true;
-        startButton.textContent = 'Restart Game';
+        startButton.textContent = 'Restart Level';
         rocket.score = 0;
         scoreElement.textContent = rocket.score;
         lastTimestamp = performance.now();
@@ -73,7 +74,7 @@ function gameLoop(timestamp) {
     updateParticles(particles);
     
     // Check collisions
-    checkCollisions(rocket, polygons, particles, scoreElement,resetGame,levelWon);
+    checkCollisions(rocket, levels[currentLevel], particles, scoreElement,resetGame,levelWon);
     
     // Increase score over time
     rocket.score += deltaTime * 0.001;
@@ -100,14 +101,14 @@ function render() {
     
     // Draw game objects
     drawStars(stars,ctx);
-    drawPolygons(polygons,ctx);
+    drawPolygons(levels[currentLevel],ctx);
     drawParticles(particles,ctx);
     drawRocket(ctx);
 }
 
 function levelWon() {
     gameRunning = false;
-    startButton.textContent = 'Success!';
+    startButton.textContent = 'Next Level';
     // Show custom modal instead of alert
     const modal = document.getElementById('level-modal');
     const message = document.getElementById('level-modal-message');
@@ -118,6 +119,7 @@ function levelWon() {
     const okBtn = document.getElementById('level-modal-ok');
     okBtn.onclick = () => {
         modal.style.display = 'none';
+        currentLevel++;
         resetGame();
     };
 }
