@@ -1,4 +1,4 @@
-import { initCamera, updateCamera, transform } from './modules/camera.js';
+import { initCamera, updateCamera, transform, camera } from './modules/camera.js';
 import { rocket, initRocket, updateRocket, drawRocket, createExhaustParticles } from './modules/rocket.js';
 import { createPolygons, drawPolygons } from './modules/polygon.js';
 import { createStars, drawStars } from './modules/stars.js';
@@ -89,6 +89,18 @@ function gameLoop(timestamp) {
 
 // Render function
 function render() {
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transforms
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Apply camera scale and translation
+    ctx.setTransform(
+        camera.scale, 0, 0, camera.scale,
+        -camera.x * camera.scale,
+        -camera.y * camera.scale
+    );
+
+    // Now draw everything in world coordinates
+    // e.g. drawPolygons, drawParticles, drawRocket, etc.
     // Clear screen with space gradient
     const gradient = ctx.createRadialGradient(
         canvas.width/2, canvas.height/2, 0,
