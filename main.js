@@ -38,7 +38,7 @@ startButton.addEventListener('click', () => {
         lastTimestamp = performance.now();
         requestAnimationFrame(gameLoop);
     } else {
-    	resetgame();
+    	resetGame();
         // Reset game
         //rocket.x = 2000;
         //rocket.y = 900;
