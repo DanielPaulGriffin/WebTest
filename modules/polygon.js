@@ -107,10 +107,10 @@ export function createPolygons() {
     ]),
           new Polygon([
             {x: 400, y: 250},
-            {x: 688, y: 250},
-            {x: 688, y: 300},
+            {x: 600, y: 250},
+            {x: 600, y: 300},
             {x: 400, y: 300}
-        ], '#e4e4e4', {x: 2150, y: 1000})
+        ], '#e4e4e4', {x: 2250, y: 900})
      ]);
 
     return levels;

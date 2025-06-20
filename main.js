@@ -20,7 +20,7 @@ resizeCanvas(canvas);
 // Initialize game objects
 initRocket();
 const levels = createPolygons();
-let currentLevel = 0;
+let currentLevel = 1;
 const stars = createStars(300, 4000);
 initCamera(canvas.width, canvas.height, rocket);
 initControls();
