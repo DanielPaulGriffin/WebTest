@@ -65,13 +65,13 @@ function resetGame(){
 // Game loop
 function gameLoop(timestamp) {
     if (!gameRunning) return;
-
+    
     const deltaTime = timestamp - lastTimestamp;
     lastTimestamp = timestamp;
-
+    
     // Update game state
     updateRocket(keys, deltaTime);
-    updateCamera(rocket); // <-- keep this after updateRocket
+    updateCamera(rocket);
     createExhaustParticles(rocket, particles);
     updateParticles(particles);
     
