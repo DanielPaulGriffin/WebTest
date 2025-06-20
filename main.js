@@ -25,7 +25,7 @@ initCamera(canvas.width, canvas.height, rocket);
 initControls();
 
 // Game state
-let gameRunning = true;
+let gameRunning = false;
 let lastTimestamp = 0;
 
 // Start game
