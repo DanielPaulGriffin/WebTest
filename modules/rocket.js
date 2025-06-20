@@ -1,4 +1,4 @@
-import { transform } from './camera.js';
+import { transform,setCameraScale } from './camera.js';
 import { lineColor } from './colors.js'; // Add this import
 
 export const rocket = {
@@ -48,6 +48,8 @@ export function updateRocket(keys, deltaTime) {
     // Move Rocket
     rocket.x += rocket.mx;
     rocket.y += rocket.my;
+
+    setCameraScale(rocket.mx*2);
     
     // World wrapping (4000x4000 world)
     const worldSize = 4000;

@@ -3,15 +3,17 @@ export const camera = {
     y: 0,
     width: 0,
     height: 0,
-    target: null
+    target: null,
+    scale: 1 // Add scale property
 };
 
-export function initCamera(width, height, target) {
+export function initCamera(width, height, target, scale = 1) {
     camera.width = width;
     camera.height = height;
     camera.target = target;
     camera.x = target.x - width/2;
     camera.y = target.y - height/2;
+    camera.scale = scale; // Initialize scale
 }
 
 export function updateCamera(target) {
@@ -22,9 +24,14 @@ export function updateCamera(target) {
     }
 }
 
+export function setCameraScale(scale) {
+    camera.scale = scale;
+}
+
 export function transform(x, y) {
+    // Apply translation and scaling
     return {
-        x: x - camera.x,
-        y: y - camera.y
+        x: (x - camera.x) * camera.scale,
+        y: (y - camera.y) * camera.scale
     };
 }
