@@ -89,21 +89,22 @@ function gameLoop(timestamp) {
 
 // Render function
 function render() {
-    // Clear screen
-    ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transforms
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Apply camera scale and translation
-    ctx.setTransform(
-        camera.scale, 0, 0, camera.scale,
-        -camera.x * camera.scale,
-        -camera.y * camera.scale
+    // Clear screen with space gradient
+    const gradient = ctx.createRadialGradient(
+        canvas.width/2, canvas.height/2, 0,
+        canvas.width/2, canvas.height/2, Math.max(canvas.width, canvas.height)
     );
-
-    // Draw everything in world coordinates
-    // drawPolygons(levels[currentLevel], ctx);
-    // drawParticles(particles, ctx);
-    // drawRocket(ctx);
+    gradient.addColorStop(0, '#0f0c29');
+    gradient.addColorStop(1, '#000000');
+    
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw game objects
+    //drawStars(stars,ctx);
+    drawPolygons(levels[((currentLevel+1)%levels.length)],ctx);
+    drawParticles(particles,ctx);
+    drawRocket(ctx);
 }
 
 function levelWon() {
