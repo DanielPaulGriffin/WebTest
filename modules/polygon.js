@@ -8,7 +8,7 @@ export class Polygon {
         this.lineWidth = 2;
     }
     
-    draw() {
+    draw(ctx) {
         ctx.beginPath();
         const start = transform(this.points[0].x + this.offset.x, this.points[0].y + this.offset.y);
         ctx.moveTo(start.x, start.y);
@@ -74,6 +74,6 @@ export function createPolygons() {
     return polygons;
 }
 
-export function drawPolygons(polygons) {
-    polygons.forEach(poly => poly.draw());
+export function drawPolygons(polygons,ctx) {
+    polygons.forEach(poly => poly.draw(ctx));
 }

@@ -91,8 +91,8 @@ function render() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
     // Draw game objects
-    drawStars(stars);
-    drawPolygons(polygons);
-    drawParticles(particles);
-    drawRocket();
+    drawStars(stars,ctx);
+    drawPolygons(polygons,ctx);
+    drawParticles(particles,ctx);
+    drawRocket(ctx);
 }
