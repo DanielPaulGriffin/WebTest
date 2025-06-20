@@ -25,7 +25,7 @@ initCamera(canvas.width, canvas.height, rocket);
 initControls();
 
 // Game state
-let gameRunning = false;
+let gameRunning = true;
 let lastTimestamp = 0;
 
 // Start game
@@ -38,8 +38,22 @@ startButton.addEventListener('click', () => {
         lastTimestamp = performance.now();
         requestAnimationFrame(gameLoop);
     } else {
+    	resetgame();
         // Reset game
-        rocket.x = 2000;
+        //rocket.x = 2000;
+        //rocket.y = 900;
+       // rocket.mx = 0;
+        //rocket.my = 0;
+       //rocket.rotation = 0;
+        //rocket.score = 0;
+        //particles.length = 0;
+        //scoreElement.textContent = rocket.score;
+       // lastTimestamp = performance.now();
+    }
+});
+
+function resetGame(){
+	 rocket.x = 2000;
         rocket.y = 900;
         rocket.mx = 0;
         rocket.my = 0;
@@ -48,9 +62,7 @@ startButton.addEventListener('click', () => {
         particles.length = 0;
         scoreElement.textContent = rocket.score;
         lastTimestamp = performance.now();
-    }
-});
-
+}
 // Game loop
 function gameLoop(timestamp) {
     if (!gameRunning) return;
