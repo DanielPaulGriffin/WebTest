@@ -18,9 +18,9 @@ export function initCamera(width, height, target, scale = 1) {
 
 export function updateCamera(target) {
     if (camera.target) {
-        // Smooth camera follow
-        camera.x += (target.x - camera.width / 2 - camera.x) * 0.05;
-        camera.y += (target.y - camera.height / 2 - camera.y) * 0.05;
+        // Center the camera on the target (rocket)
+        camera.x = target.x - camera.width / (2 * camera.scale);
+        camera.y = target.y - camera.height / (2 * camera.scale);
     }
 }
 

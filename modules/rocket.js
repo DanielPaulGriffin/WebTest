@@ -51,8 +51,8 @@ export function updateRocket(keys, deltaTime) {
 
     // Calculate rocket speed (magnitude)
     const velocity = Math.sqrt(rocket.mx * rocket.mx + rocket.my * rocket.my);
-    // Set scale: zoom out as speed increases, clamp between 0.5 and 1.2
-    const scale = Math.max(0.5, Math.min(2, 2 - velocity * .5));
+    // Set scale: zoom out as speed increases, clamp between 0.5 and 2
+    const scale = Math.max(0.5, Math.min(2, 2 - velocity * 1));
     setCameraScale(scale);
     
     // World wrapping (4000x4000 world)
