@@ -26,7 +26,7 @@ export function checkCollisions(rocket, polygons, particles, scoreElement, reset
             if (poly.containsPoint(vertex.x, vertex.y)) {
             	if(poly.color == '#e4e4e4')
                 {
-                     if (wonCallback && typeof wonCallback === 'function') 
+                    if (wonCallback && typeof wonCallback === 'function') 
                     {
                         wonCallback();
                     }

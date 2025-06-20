@@ -1,5 +1,5 @@
 import { transform } from './camera.js';
-import { lineColor } from './colors.js';
+import { lineColor,polyFillColor,bgColor } from './colors.js';
 
 // Define the lineColor variable at the top of the file
 //export const lineColor = '#484848';
@@ -30,7 +30,7 @@ export class Polygon {
         ctx.stroke();
         
         // Fill polygon
-        ctx.fillStyle = `rgba(5, 5, 5, 1)`;
+        ctx.fillStyle =polyFillColor;
         ctx.fill();
     }
     

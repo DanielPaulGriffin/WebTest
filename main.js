@@ -6,6 +6,7 @@ import { particles, createParticles, updateParticles, drawParticles } from './mo
 import { initControls, keys } from './modules/controls.js';
 import { checkCollisions } from './modules/collision.js';
 import { resizeCanvas } from './modules/utils.js';
+import { bgColor } from './modules/colors.js';
 
 // Initialize canvas
 const canvas = document.getElementById('gameCanvas');
@@ -96,7 +97,7 @@ function render() {
     gradient.addColorStop(0, '#0f0c29');
     gradient.addColorStop(1, '#000000');
     
-    ctx.fillStyle = gradient;
+    ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
     // Draw game objects
