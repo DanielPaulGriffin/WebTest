@@ -13,7 +13,7 @@ export function createStars(count, worldSize) {
     return stars;
 }
 
-export function drawStars(stars) {
+export function drawStars(stars,ctx) {
     stars.forEach(star => {
         const screenPos = transform(star.x, star.y);
         ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;

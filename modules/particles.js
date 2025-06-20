@@ -20,7 +20,7 @@ export function updateParticles(particles) {
     });
 }
 
-export function drawParticles(particles) {
+export function drawParticles(particles,ctx) {
     particles.forEach(p => {
         const screenPos = transform(p.x, p.y);
         const alpha = p.life / 30;

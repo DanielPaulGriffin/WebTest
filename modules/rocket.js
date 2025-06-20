@@ -56,7 +56,7 @@ export function updateRocket(keys, deltaTime) {
     if (rocket.y > worldSize + rocket.height) rocket.y = -rocket.height;
 }
 
-export function drawRocket() {
+export function drawRocket(ctx) {
     const screenPos = transform(rocket.x, rocket.y);
     
     // Save and transform canvas
