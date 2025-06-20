@@ -54,7 +54,7 @@ const rocket = {
     my: 0,
     width: 30,
     height: 50,
-    speed: 0.04,
+    speed: 0.1,
     rotation: 0,
     thrust: false,
     score: 0,
@@ -89,7 +89,6 @@ class Polygon {
         ctx.stroke();
         
         // Fill polygon with semi-transparent color
-        //ctx.fillStyle = this.color + '33'; // 20% opacity
         ctx.fillStyle = `rgba(5, 5, 5, 1)`;
         ctx.fill();
     }
@@ -112,7 +111,6 @@ class Polygon {
 // Create polygons in world space
 const polygons = [];
 const worldSize = 4000;  // Size of the game world
-
 
 polygons.push(new Polygon([
     {x: -3558, y: -419},
@@ -179,6 +177,7 @@ polygons.push(new Polygon([
     {x: 5490, y: 3589},
     {x: -3590, y: 3613}
 ], '#16f110'));
+
 // Create stars in world space
 const stars = [];
 for (let i = 0; i < 300; i++) {
@@ -274,14 +273,10 @@ function drawRocket() {
     
     // Flash red on collision
     if (rocket.colorFlash > 0) {
-        ctx.fillStyle = '#ff0000';
+        ctx.fillStyle = '#16f110';
         rocket.colorFlash--;
     } else {
-        // Normal rocket gradient
-        const gradient = ctx.createLinearGradient(0, -rocket.height/2, 0, rocket.height/2);
-        gradient.addColorStop(0, '#ff5e62');
-        gradient.addColorStop(1, '#ff0000');
-        ctx.fillStyle = gradient;
+        ctx.fillStyle = '#16f110';
     }
     
     ctx.beginPath();
@@ -289,14 +284,11 @@ function drawRocket() {
     ctx.lineTo(-rocket.width/2, rocket.height/2);
     ctx.lineTo(rocket.width/2, rocket.height/2);
     ctx.closePath();
+    ctx.strokeStyle = '#16f110';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.fillStyle = `rgba(10, 10, 10, 1)`;
     ctx.fill();
-    
-    // Rocket cockpit
-    ctx.fillStyle = '#00ffff';
-    ctx.beginPath();
-    ctx.arc(0, -rocket.height/6, 6, 0, Math.PI * 2);
-    ctx.fill();
-    
     ctx.restore();
 }
 
@@ -333,32 +325,32 @@ function drawParticles() {
     });
 }
 
-// COLLISION DETECTION AND RESPONSE - UPDATED
+// COLLISION DETECTION AND RESPONSE - FIXED VERTEX CALCULATIONS
 function checkCollisions() {
-    // Create collision points at the three vertices of the rocket triangle
-    const collisionPoints = [
-        // Nose point (top vertex)
+    // Calculate rocket vertices correctly
+    const vertices = [
+        // Nose (top vertex)
         {
             x: rocket.x + Math.sin(rocket.rotation) * (rocket.height/2),
             y: rocket.y - Math.cos(rocket.rotation) * (rocket.height/2)
         },
-        // Left wing (bottom-left vertex)
+        // Left wing
         {
-            x: rocket.x + Math.sin(rocket.rotation - Math.PI*2/3) * (rocket.height/2),
-            y: rocket.y - Math.cos(rocket.rotation - Math.PI*2/3) * (rocket.height/2)
+            x: rocket.x - Math.cos(rocket.rotation) * (rocket.width/2) - Math.sin(rocket.rotation) * (rocket.height/2),
+            y: rocket.y - Math.sin(rocket.rotation) * (rocket.width/2) + Math.cos(rocket.rotation) * (rocket.height/2)
         },
-        // Right wing (bottom-right vertex)
+        // Right wing
         {
-            x: rocket.x + Math.sin(rocket.rotation + Math.PI*2/3) * (rocket.height/2),
-            y: rocket.y - Math.cos(rocket.rotation + Math.PI*2/3) * (rocket.height/2)
+            x: rocket.x + Math.cos(rocket.rotation) * (rocket.width/2) - Math.sin(rocket.rotation) * (rocket.height/2),
+            y: rocket.y + Math.sin(rocket.rotation) * (rocket.width/2) + Math.cos(rocket.rotation) * (rocket.height/2)
         }
     ];
     
     // Check each polygon against all collision points
     for (const poly of polygons) {
-        for (const point of collisionPoints) {
-            if (poly.containsPoint(point.x, point.y)) {
-                handleCollision(point.x, point.y);
+        for (const vertex of vertices) {
+            if (poly.containsPoint(vertex.x, vertex.y)) {
+                handleCollision(vertex.x, vertex.y);
                 return; // Only handle one collision per frame
             }
         }
@@ -384,11 +376,13 @@ function handleCollision(x, y) {
 // Update game state
 function update() {
     // Rotation
-    if (keys['ArrowLeft']) rocket.rotation -= 0.05;
-    if (keys['ArrowRight']) rocket.rotation += 0.05;
+    if (keys['ArrowLeft']) rocket.rotation -= 0.075;
+    if (keys['ArrowRight']) rocket.rotation += 0.075;
+    if (keys['a']) rocket.rotation -= 0.075;
+    if (keys['d']) rocket.rotation += 0.075;
     
     // Movement (direction-sensitive)
-    if (keys['ArrowUp']) {
+    if (keys['ArrowUp']||keys['w']) {
         rocket.mx += Math.sin(rocket.rotation) * rocket.speed;
         rocket.my -= Math.cos(rocket.rotation) * rocket.speed;
     }
@@ -441,32 +435,32 @@ function render() {
     // Draw rocket
     drawRocket();
     
-    // Draw collision points for debugging
-    const collisionPoints = [
+    // Draw collision points for debugging - FIXED
+    //const vertices = [
         // Nose
-        {
-            x: rocket.x + Math.sin(rocket.rotation) * (rocket.height/2),
-            y: rocket.y - Math.cos(rocket.rotation) * (rocket.height/2)
-        },
+    ///    {
+    //        x: rocket.x + Math.sin(rocket.rotation) * (rocket.height/2),
+    //        y: rocket.y - Math.cos(rocket.rotation) * (rocket.height/2)
+    //    },
         // Left wing
-        {
-            x: rocket.x + Math.sin(rocket.rotation - Math.PI*2/3) * (rocket.height/2),
-            y: rocket.y - Math.cos(rocket.rotation - Math.PI*2/3) * (rocket.height/2)
-        },
+    //    {
+    //        x: rocket.x - Math.cos(rocket.rotation) * (rocket.width/2) - Math.sin(rocket.rotation) * (rocket.height/2),
+    //        y: rocket.y - Math.sin(rocket.rotation) * (rocket.width/2) + Math.cos(rocket.rotation) * (rocket.height/2)
+    //    },
         // Right wing
-        {
-            x: rocket.x + Math.sin(rocket.rotation + Math.PI*2/3) * (rocket.height/2),
-            y: rocket.y - Math.cos(rocket.rotation + Math.PI*2/3) * (rocket.height/2)
-        }
-    ];
+     //   {
+     //       x: rocket.x + Math.cos(rocket.rotation) * (rocket.width/2) - Math.sin(rocket.rotation) * (rocket.height/2),
+     //       y: rocket.y + Math.sin(rocket.rotation) * (rocket.width/2) + Math.cos(rocket.rotation) * (rocket.height/2)
+     //   }
+    //];
     
-    collisionPoints.forEach(point => {
-        const screenPos = camera.transform(point.x, point.y);
-        ctx.fillStyle = 'lime';
-        ctx.beginPath();
-        ctx.arc(screenPos.x, screenPos.y, 4, 0, Math.PI * 2);
-        ctx.fill();
-    });
+    //vertices.forEach(vertex => {
+     //   const screenPos = camera.transform(vertex.x, vertex.y);
+     //   ctx.fillStyle = 'lime';
+     //   ctx.beginPath();
+     //   ctx.arc(screenPos.x, screenPos.y, 4, 0, Math.PI * 2);
+     //   ctx.fill();
+    //});
 }
 
 // Game loop
