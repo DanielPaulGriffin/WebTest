@@ -87,10 +87,10 @@ export function drawRocket(ctx) {
     ctx.fill();
     
     // Draw cockpit window
-    ctx.fillStyle = '#16f110';
-    ctx.beginPath();
-    ctx.arc(0, -rocket.height/4, 5, 0, Math.PI * 2);
-    ctx.fill();
+    //ctx.fillStyle = '#16f110';
+    //ctx.beginPath();
+    //ctx.arc(0, -rocket.height/4, 5, 0, Math.PI * 2);
+    //ctx.fill();
     
     ctx.restore();
 }
