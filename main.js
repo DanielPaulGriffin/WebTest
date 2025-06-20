@@ -57,6 +57,8 @@ function resetGame(){
         lastTimestamp = performance.now();
 }
 
+
+
 // Game loop
 function gameLoop(timestamp) {
     if (!gameRunning) return;
@@ -101,4 +103,21 @@ function render() {
     drawPolygons(polygons,ctx);
     drawParticles(particles,ctx);
     drawRocket(ctx);
+}
+
+function levelWon() {
+    gameRunning = false;
+    startButton.textContent = 'Success!';
+    // Show custom modal instead of alert
+    const modal = document.getElementById('level-modal');
+    const message = document.getElementById('level-modal-message');
+    message.textContent = `Level won! Your score: ${Math.floor(rocket.score)}`;
+    modal.style.display = 'flex';
+
+    // Only reset when OK is clicked
+    const okBtn = document.getElementById('level-modal-ok');
+    okBtn.onclick = () => {
+        modal.style.display = 'none';
+        resetGame();
+    };
 }

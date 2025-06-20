@@ -74,9 +74,9 @@ export function createPolygons() {
     polygons.push(new Polygon([
     {x: 400, y: 250},
     {x: 688, y: 250},
-    {x: 688, y: 350},
-    {x: 400, y: 350}
-], '#e4e4e4',{x: 2200, y: 3000}));
+    {x: 688, y: 300},
+    {x: 400, y: 300}
+], '#e4e4e4',{x: 2150, y: 3000}));
     return polygons;
 }
 
