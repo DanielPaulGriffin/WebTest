@@ -28,7 +28,11 @@ export function checkCollisions(rocket, polygons, particles, scoreElement, reset
             	if(poly.color == '#e4e4e4') {
                     if (wonCallback && typeof wonCallback === 'function') {
                         // Only land if rocket is almost vertical (within ±15 degrees)
-                        if (Math.abs(rocket.rotation) < 0.4) {
+                        let angle = rocket.rotation % (2 * Math.PI);
+                        if (angle > Math.PI) angle -= 2 * Math.PI;
+                        if (angle < -Math.PI) angle += 2 * Math.PI;
+
+                        if (Math.abs(angle) < 0.4) {
                             wonCallback();
                         } else {
                             handleCollision(vertex.x, vertex.y, particles, scoreElement, resetCallback);
