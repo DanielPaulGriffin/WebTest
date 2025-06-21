@@ -87,7 +87,7 @@ export function drawRocket(ctx) {
     ctx.closePath();
 
     ctx.strokeStyle = lineColor;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 4;
     ctx.stroke();
     ctx.fillStyle = `rgba(10, 10, 10, 1)`;
     ctx.fill();
