@@ -1,3 +1,4 @@
+import { transform } from './camera.js';
 export const particles = [];
 
 export function createParticles() {
