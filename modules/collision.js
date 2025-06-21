@@ -20,35 +20,21 @@ export function checkCollisions(rocket, polygons, particles, scoreElement, reset
         }
     ];
     
-    // // Check each polygon against all collision points
-    // for (const poly of polygons) {
-    //     for (const vertex of vertices) {
-    //         if (poly.containsPoint(vertex.x, vertex.y)) {
-    //         	if(poly.color == '#e4e4e4')
-    //             {
-    //                 if (wonCallback && typeof wonCallback === 'function') 
-    //                 {
-    //                     wonCallback();
-    //                 }
-    //                 return;
-    //             } 
-    //             handleCollision(vertex.x, vertex.y, particles, scoreElement, resetCallback);
-    //             return; // Only handle one collision per frame
-    //         }
-    //     }
-    // }
-
-    // Correct: use world coordinates directly
-    for (const polygon of polygons) {
-        if (polygon.containsPoint(rocket.x, rocket.y)) {
-            if (polygon.color == '#e4e4e4') {
-                if (wonCallback && typeof wonCallback === 'function') {
-                    wonCallback();
-                }
-                return;
+    // Check each polygon against all collision points
+    for (const poly of polygons) {
+        for (const vertex of vertices) {
+            if (poly.containsPoint(vertex.x, vertex.y)) {
+            	if(poly.color == '#e4e4e4')
+                {
+                    if (wonCallback && typeof wonCallback === 'function') 
+                    {
+                        wonCallback();
+                    }
+                    return;
+                } 
+                handleCollision(vertex.x, vertex.y, particles, scoreElement, resetCallback);
+                return; // Only handle one collision per frame
             }
-            handleCollision(rocket.x, rocket.y, particles, scoreElement, resetCallback);
-            return; // Only handle one collision per frame
         }
     }
 }
