@@ -98,10 +98,9 @@ export function drawRocket(ctx) {
 export function createExhaustParticles(rocket, particles) {
     if (rocket.thrust) {
         for (let i = 0; i < 3; i++) {
-            // When creating exhaust particles
             particles.push({
                 x: rocket.x - Math.sin(rocket.rotation) * (rocket.height/2 + 5),
-                y: rocket.y - Math.cos(rocket.rotation) * (rocket.height/2 + 5),
+                y: rocket.y + Math.cos(rocket.rotation) * (rocket.height/2 + 5),
                 size: Math.random() * 4 + 2,
                 speed: Math.random() * 3 + rocket.speed,
                 angle: rocket.rotation + (Math.random() - 0.5) * 0.5,

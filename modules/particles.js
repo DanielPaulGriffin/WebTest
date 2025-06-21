@@ -1,4 +1,5 @@
 //import { camera, transform } from './camera.js';
+import { lineColor } from './modules/colors.js';
 export const particles = [];
 
 export function createParticles() {
@@ -24,8 +25,8 @@ export function drawParticles(particles, ctx) {
     for (const p of particles) {
         ctx.save();
         // Use world coordinates directly
-        ctx.globalAlpha = p.alpha;
-        ctx.fillStyle = p.color;
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = lineColor;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
