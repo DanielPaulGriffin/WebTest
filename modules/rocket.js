@@ -64,6 +64,8 @@ export function updateRocket(keys, deltaTime) {
     if (rocket.x > worldSize + rocket.width) rocket.x = -rocket.width;
     if (rocket.y < -rocket.height) rocket.y = worldSize + rocket.height;
     if (rocket.y > worldSize + rocket.height) rocket.y = -rocket.height;
+
+   
 }
 
 export function drawRocket(ctx) {

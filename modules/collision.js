@@ -32,7 +32,7 @@ export function checkCollisions(rocket, polygons, particles, scoreElement, reset
                         if (angle > Math.PI) angle -= 2 * Math.PI;
                         if (angle < -Math.PI) angle += 2 * Math.PI;
                         const velocity = Math.sqrt(rocket.mx * rocket.mx + rocket.my * rocket.my);
-                        if (velocity < 1){//Math.abs(angle) < 0.4&&) {
+                        if (velocity < 1 && Math.abs(angle) < 0.4) {
                             wonCallback();
                         } else {
                             handleCollision(vertex.x, vertex.y, particles, scoreElement, resetCallback);

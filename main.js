@@ -33,9 +33,9 @@ startGame();
 // Start game
 startButton.addEventListener('click', () => {
     if (!gameRunning) {
-        startGame();
+       // startGame();
     } else {
-    	resetGame();       
+    	//resetGame();       
     }
 });
 
@@ -59,7 +59,22 @@ function resetGame(){
         lastTimestamp = performance.now();
 }
 
+function crashed(){
+    gameRunning = false;
+    startButton.textContent = 'Restart Level';
+     // Show custom modal instead of alert
+    const modal = document.getElementById('level-modal');
+    const message = document.getElementById('level-modal-message');
+    message.textContent = `Crashed!`;
+    modal.style.display = 'flex';
 
+    // Only reset when OK is clicked
+    const okBtn = document.getElementById('level-modal-ok');
+    okBtn.onclick = () => {
+        modal.style.display = 'none';
+        resetGame();
+    };
+}
 
 // Game loop
 function gameLoop(timestamp) {
