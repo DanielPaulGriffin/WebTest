@@ -71,8 +71,9 @@ function crashed(){
     // Only reset when OK is clicked
     const okBtn = document.getElementById('level-modal-ok');
     okBtn.onclick = () => {
-        modal.style.display = 'none';
         resetGame();
+        modal.style.display = 'none';
+        //resetGame();
     };
 }
 
