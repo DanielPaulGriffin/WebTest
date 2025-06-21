@@ -18,7 +18,6 @@ export function initCamera(width, height, target, scale = 1) {
 
 export function updateCamera(target) {
     if (camera.target) {
-        // Center the camera on the target, accounting for scale
         camera.x = target.x - camera.width / (2 * camera.scale);
         camera.y = target.y - camera.height / (2 * camera.scale);
     }

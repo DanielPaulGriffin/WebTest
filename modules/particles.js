@@ -1,5 +1,3 @@
-import { transform } from './camera.js';
-
 export const particles = [];
 
 export function createParticles() {
@@ -20,15 +18,18 @@ export function updateParticles(particles) {
     });
 }
 
-export function drawParticles(particles,ctx) {
-    particles.forEach(p => {
-        const screenPos = transform(p.x, p.y);
-        const alpha = p.life / 30;
-        ctx.fillStyle = `rgba(255, ${Math.floor(100 + Math.random() * 155)}, 0, ${alpha})`;
+// Remove transform usage from particle drawing
+export function drawParticles(particles, ctx) {
+    for (const p of particles) {
+        ctx.save();
+        // Use world coordinates directly
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = p.color;
         ctx.beginPath();
-        ctx.arc(screenPos.x, screenPos.y, p.size * alpha, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
-    });
+        ctx.restore();
+    }
 }
 
 export function createCollisionParticles(x, y, count) {

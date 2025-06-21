@@ -1,4 +1,3 @@
-import { transform } from './camera.js';
 import { lineColor,polyFillColor,bgColor } from './colors.js';
 
 // Define the lineColor variable at the top of the file
@@ -16,12 +15,11 @@ export class Polygon {
     
     draw(ctx) {
         ctx.beginPath();
-        const start = transform(this.points[0].x + this.offset.x, this.points[0].y + this.offset.y);
-        ctx.moveTo(start.x, start.y);
+        // Use world coordinates directly
+        ctx.moveTo(this.points[0].x + this.offset.x, this.points[0].y + this.offset.y);
         
         for (let i = 1; i < this.points.length; i++) {
-            const point = transform(this.points[i].x + this.offset.x, this.points[i].y + this.offset.y);
-            ctx.lineTo(point.x, point.y);
+            ctx.lineTo(this.points[i].x + this.offset.x, this.points[i].y + this.offset.y);
         }
         
         ctx.closePath();
@@ -30,7 +28,7 @@ export class Polygon {
         ctx.stroke();
         
         // Fill polygon
-        ctx.fillStyle =polyFillColor;
+        ctx.fillStyle = polyFillColor;
         ctx.fill();
     }
     
