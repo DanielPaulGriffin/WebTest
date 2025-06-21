@@ -141,5 +141,6 @@ function levelWon() {
         modal.style.display = 'none';
         currentLevel++;
         resetGame();
+        startGame();
     };
 }
