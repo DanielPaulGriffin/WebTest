@@ -111,7 +111,7 @@ function render() {
     ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transforms
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    drawPolygons(levels[currentLevel], ctx);
+    drawPolygons(levels[(currentLevel+1)%levels.length], ctx);
     drawParticles(particles, ctx);
     drawRocket(ctx);
 }
