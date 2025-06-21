@@ -73,6 +73,7 @@ function crashed(){
     const okBtn = document.getElementById('level-modal-ok');
     okBtn.onclick = () => {
         modal.style.display = 'none';
+        resetGame
         startGame();
     };
 }
