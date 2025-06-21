@@ -36,10 +36,10 @@ export class Polygon {
     containsPoint(x, y) {
         let inside = false;
         for (let i = 0, j = this.points.length - 1; i < this.points.length; j = i++) {
-            const xi = this.points[i].x;// + this.offset.x;
-            const yi = this.points[i].y;// + this.offset.y;
-            const xj = this.points[j].x;// + this.offset.x;
-            const yj = this.points[j].y;// + this.offset.y;
+            const xi = this.points[i].x + this.offset.x;
+            const yi = this.points[i].y + this.offset.y;
+            const xj = this.points[j].x + this.offset.x;
+            const yj = this.points[j].y + this.offset.y;
             
             const intersect = ((yi > y) !== (yj > y)) &&
                 (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
