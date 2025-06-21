@@ -156,7 +156,7 @@ export function createPolygons() {
             {x: 600, y: 250},
             {x: 600, y: 300},
             {x: 400, y: 300}
-        ], '#e4e4e4', {x: 2500, y: 850})
+        ], '#e4e4e4', {x: 2500, y:3000})
      ]);
 
     return levels;
