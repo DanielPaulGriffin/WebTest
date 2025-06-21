@@ -1,4 +1,4 @@
-//import { camera, transform } from './camera.js';
+import { camera, transform } from './camera.js';
 import { lineColor } from './colors.js';
 export const particles = [];
 
@@ -23,12 +23,12 @@ export function updateParticles(particles) {
 // Remove transform usage from particle drawing
 export function drawParticles(particles, ctx) {
     for (const p of particles) {
+        const screenPos = transform(p.x, p.y);
         ctx.save();
-        // Use world coordinates directly
-        ctx.globalAlpha = 1;
-        ctx.fillStyle = lineColor;
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = p.color;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.arc(screenPos.x, screenPos.y, p.size, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
     }
