@@ -47,23 +47,8 @@ body {
     border: 1px solid #00f3ff;
 }
 
-#start-btn {
-    background: linear-gradient(to bottom, #ff6b6b, #ff0000);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-family: 'Orbitron', sans-serif;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-}
 
-#start-btn:hover {
-    background: linear-gradient(to bottom, #ff0000, #ff6b6b);
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.9);
-}
+
 
 #controls {
     position: absolute;
