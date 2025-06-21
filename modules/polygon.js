@@ -4,6 +4,7 @@ import { lineColor,polyFillColor,bgColor } from './colors.js';
 //export const lineColor = '#484848';
 //'#484848' - grey
 //'#16f110' - green
+//
 
 export class Polygon {
     constructor(points, color = lineColor, offset = {x: 2000, y: 2000}) {
