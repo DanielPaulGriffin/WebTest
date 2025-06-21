@@ -41,7 +41,7 @@ startGame();
 
 function startGame(){
 	gameRunning = true;
-        startButton.textContent = 'Restart Level';
+      //  startButton.textContent = 'Restart Level';
         rocket.score = 0;
         //scoreElement.textContent = rocket.score;
         lastTimestamp = performance.now();
@@ -62,7 +62,7 @@ function resetGame(){
 
 function crashed(){
     gameRunning = false;
-    startButton.textContent = 'Restart Level';
+   // startButton.textContent = 'Restart Level';
      // Show custom modal instead of alert
     const modal = document.getElementById('level-modal');
     const message = document.getElementById('level-modal-message');
