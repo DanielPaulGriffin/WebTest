@@ -71,6 +71,7 @@ function crashed(){
 
     // Only reset when OK is clicked
     const okBtn = document.getElementById('level-modal-ok');
+    okBtn.textContent = 'Try Again'
     okBtn.onclick = () => {
         modal.style.display = 'none';
         resetGame();
@@ -134,6 +135,8 @@ function levelWon() {
 
     // Only reset when OK is clicked
     const okBtn = document.getElementById('level-modal-ok');
+    okBtn.textContent = 'Next Level'
+
     okBtn.onclick = () => {
         modal.style.display = 'none';
         currentLevel++;
