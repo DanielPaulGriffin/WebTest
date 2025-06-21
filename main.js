@@ -1,4 +1,4 @@
-import { initCamera, updateCamera, transform, camera } from './modules/camera.js';
+import { initCamera, updateCamera,updateCameraToBounds, transform, camera } from './modules/camera.js';
 import { rocket, initRocket, updateRocket, drawRocket, createExhaustParticles } from './modules/rocket.js';
 import { createPolygons, drawPolygons } from './modules/polygon.js';
 import { createStars, drawStars } from './modules/stars.js';
@@ -87,36 +87,7 @@ function gameLoop(timestamp) {
     
     requestAnimationFrame(gameLoop);
 }
-function updateCameraToBounds() {
-    const levelPolys = levels[currentLevel];
-    const pad = levelPolys[levelPolys.length - 1]; // landing pad
-    // gather all world‑space points of pad
-    const padPoints = pad.points.map(p => ({
-        x: p.x + (pad.offset?.x || 0),
-        y: p.y + (pad.offset?.y || 0)
-    }));
-    // include rocket position
-    padPoints.push({ x: rocket.x, y: rocket.y });
 
-    // compute bounding box
-    const xs = padPoints.map(p => p.x);
-    const ys = padPoints.map(p => p.y);
-    const minX = Math.min(...xs), maxX = Math.max(...xs);
-    const minY = Math.min(...ys), maxY = Math.max(...ys);
-    const worldW = maxX - minX, worldH = maxY - minY;
-
-    // compute scale to fit both in view, with 10% padding
-    const scaleX = canvas.width  / (worldW * 1.1);
-    const scaleY = canvas.height / (worldH * 1.1);
-    const newScale = Math.min(scaleX, scaleY);
-    setCameraScale(newScale);
-
-    // center camera on the midpoint
-    const centerX = (minX + maxX) / 2;
-    const centerY = (minY + maxY) / 2;
-    camera.x = centerX - camera.width  / (2 * camera.scale);
-    camera.y = centerY - camera.height / (2 * camera.scale);
-}
 // Render function
 function render() {
     ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transforms
