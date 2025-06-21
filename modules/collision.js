@@ -43,6 +43,6 @@ function handleCollision(x, y, particles, scoreElement, resetCallback) {
     
     // Call the reset callback from main.js
     if (resetCallback && typeof resetCallback === 'function') {
-       // resetCallback();
+        resetCallback();
     }
 }
