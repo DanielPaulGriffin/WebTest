@@ -90,7 +90,7 @@ export function drawRocket(ctx) {
     ctx.closePath();
 
     ctx.strokeStyle = lineColor;
-    ctx.lineWidth = 2 / camera.scale; // keep stroke thickness constant
+    ctx.lineWidth = 3;// / camera.scale; // keep stroke thickness constant
     ctx.stroke();
 
     ctx.fillStyle = `rgba(10, 10, 10, 1)`;
