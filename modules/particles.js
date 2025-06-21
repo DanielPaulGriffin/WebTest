@@ -1,4 +1,4 @@
-import { camera, transform } from './camera.js';
+//import { camera, transform } from './camera.js';
 export const particles = [];
 
 export function createParticles() {
@@ -9,9 +9,9 @@ export function updateParticles(particles) {
     particles.forEach((p, i) => {
         // Update particle
         p.x -= Math.sin(p.angle) * p.speed;
-        p.y += Math.cos(p.angle) * p.speed;
+        p.y -= Math.cos(p.angle) * p.speed; // <-- change + to -
         p.life--;
-        
+
         // Remove dead particles
         if (p.life <= 0) {
             particles.splice(i, 1);

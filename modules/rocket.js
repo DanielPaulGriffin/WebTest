@@ -52,7 +52,7 @@ export function updateRocket(keys, deltaTime) {
     // Calculate rocket speed (magnitude)
     const velocity = Math.sqrt(rocket.mx * rocket.mx + rocket.my * rocket.my);
     // Set scale: zoom out as speed increases, clamp between 0.5 and 1.2
-    let zoomInLimit = 1.5;
+    let zoomInLimit = 1.25;
     let zoomOutLimit = 0.4;
     let rateOfChange = .2;
     const scale = Math.max(zoomOutLimit, Math.min(zoomInLimit, zoomInLimit - velocity * rateOfChange));
@@ -98,9 +98,10 @@ export function drawRocket(ctx) {
 export function createExhaustParticles(rocket, particles) {
     if (rocket.thrust) {
         for (let i = 0; i < 3; i++) {
+            // When creating exhaust particles
             particles.push({
                 x: rocket.x - Math.sin(rocket.rotation) * (rocket.height/2 + 5),
-                y: rocket.y + Math.cos(rocket.rotation) * (rocket.height/2 + 5),
+                y: rocket.y - Math.cos(rocket.rotation) * (rocket.height/2 + 5),
                 size: Math.random() * 4 + 2,
                 speed: Math.random() * 3 + rocket.speed,
                 angle: rocket.rotation + (Math.random() - 0.5) * 0.5,
