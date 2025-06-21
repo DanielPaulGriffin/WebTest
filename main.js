@@ -98,7 +98,7 @@ function gameLoop(timestamp) {
     
     // Increase score over time
     rocket.score += deltaTime * 0.001;
-    scoreElement.textContent = Math.floor(rocket.score);
+    //scoreElement.textContent = Math.floor(rocket.score);
     
     // Render
     render();
