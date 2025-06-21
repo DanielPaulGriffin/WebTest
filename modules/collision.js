@@ -23,7 +23,7 @@ export function checkCollisions(rocket, polygons, particles, scoreElement, reset
     // Check each polygon against all collision points
     for (const poly of polygons) {
         for (const vertex of vertices) {
-            if (poly.containsPoint(vertex.x + poly.offset.x, vertex.y + poly.offset.y)) {
+            if (poly.containsPoint(vertex.x - poly.offset.x, vertex.y - poly.offset.y)) {
             //if (poly.containsPoint(vertex.x, vertex.y)) {
             	if(poly.color == '#e4e4e4')
                 {
