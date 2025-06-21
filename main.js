@@ -70,7 +70,7 @@ function gameLoop(timestamp) {
     
     // Update game state
     updateRocket(keys, deltaTime);
-    updateCameraToBounds(levels,currentLevel,rocket);
+    updateCameraToBounds(levels,currentLevel,rocket,canvas);
     //updateCamera(rocket);
     createExhaustParticles(rocket, particles);
     updateParticles(particles);
