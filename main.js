@@ -11,8 +11,8 @@ import { bgColor } from './modules/colors.js';
 // Initialize canvas
 const canvas = document.getElementById('gameCanvas');
 export const ctx = canvas.getContext('2d');
-const scoreElement = document.getElementById('score');
-const startButton = document.getElementById('start-btn');
+//const scoreElement = document.getElementById('score');
+//const startButton = document.getElementById('start-btn');
 
 // Set canvas dimensions to window size
 window.addEventListener('resize', () => resizeCanvas(canvas));
@@ -31,19 +31,19 @@ let gameRunning = false;
 let lastTimestamp = 0;
 startGame();
 // Start game
-startButton.addEventListener('click', () => {
-    if (!gameRunning) {
+//startButton.addEventListener('click', () => {
+//    if (!gameRunning) {
        // startGame();
-    } else {
+ //   } else {
     	//resetGame();       
-    }
-});
+//    }
+//});
 
 function startGame(){
 	gameRunning = true;
         startButton.textContent = 'Restart Level';
         rocket.score = 0;
-        scoreElement.textContent = rocket.score;
+        //scoreElement.textContent = rocket.score;
         lastTimestamp = performance.now();
         requestAnimationFrame(gameLoop);
 }
@@ -56,7 +56,7 @@ function resetGame(){
         rocket.rotation = 0;
         rocket.score = 0;
         particles.length = 0;
-        scoreElement.textContent = rocket.score;
+        //scoreElement.textContent = rocket.score;
         lastTimestamp = performance.now();
 }
 
@@ -94,7 +94,7 @@ function gameLoop(timestamp) {
     updateParticles(particles);
     
     // Check collisions
-    checkCollisions(rocket, levels[(currentLevel+1)%levels.length], particles, scoreElement,crashed,levelWon);
+    checkCollisions(rocket, levels[(currentLevel+1)%levels.length], particles,crashed,levelWon);
     
     // Increase score over time
     rocket.score += deltaTime * 0.001;

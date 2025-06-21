@@ -1,6 +1,6 @@
 import { createCollisionParticles } from './particles.js';
 
-export function checkCollisions(rocket, polygons, particles, scoreElement, resetCallback,wonCallback) {
+export function checkCollisions(rocket, polygons, particles, resetCallback,wonCallback) {
     // Calculate rocket vertices
     const vertices = [
         // Nose (top vertex)
@@ -35,19 +35,19 @@ export function checkCollisions(rocket, polygons, particles, scoreElement, reset
                         if (velocity < 1 && Math.abs(angle) < 0.4) {
                             wonCallback();
                         } else {
-                            handleCollision(vertex.x, vertex.y, particles, scoreElement, resetCallback);
+                            handleCollision(vertex.x, vertex.y, particles, resetCallback);
                         }
                     }
                     return;
                 } 
-                handleCollision(vertex.x, vertex.y, particles, scoreElement, resetCallback);
+                handleCollision(vertex.x, vertex.y, particles, resetCallback);
                 return; // Only handle one collision per frame
             }
         }
     }
 }
 
-function handleCollision(x, y, particles, scoreElement, resetCallback) {
+function handleCollision(x, y, particles, resetCallback) {
     // Create collision particles
     createCollisionParticles(x, y, 15);
     
