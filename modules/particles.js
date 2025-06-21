@@ -10,7 +10,7 @@ export function updateParticles(particles) {
     particles.forEach((p, i) => {
         // Update particle
         p.x -= Math.sin(p.angle) * p.speed;
-        p.y -= Math.cos(p.angle) * p.speed; // <-- change + to -
+        p.y += Math.cos(p.angle) * p.speed; // <-- change + to -
         p.life--;
 
         // Remove dead particles
