@@ -48,7 +48,7 @@ function startGame(){
         requestAnimationFrame(gameLoop);
 }
 function resetGame(){
-        gameRunning = true;
+        //gameRunning = true;
 	    rocket.x = 2000;
         rocket.y = 900;
         rocket.mx = 0;
@@ -73,7 +73,7 @@ function crashed(){
     const okBtn = document.getElementById('level-modal-ok');
     okBtn.onclick = () => {
         modal.style.display = 'none';
-        resetGame();
+        startGame();
     };
 }
 
