@@ -25,8 +25,8 @@ export function drawParticles(particles, ctx) {
     for (const p of particles) {
         const screenPos = transform(p.x, p.y);
         ctx.save();
-        ctx.globalAlpha = p.alpha;
-        ctx.fillStyle = p.color;
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = lineColor;
         ctx.beginPath();
         ctx.arc(screenPos.x, screenPos.y, p.size, 0, Math.PI * 2);
         ctx.fill();
