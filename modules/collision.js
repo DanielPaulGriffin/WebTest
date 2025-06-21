@@ -25,12 +25,14 @@ export function checkCollisions(rocket, polygons, particles, scoreElement, reset
         for (const vertex of vertices) {
             if (poly.containsPoint(vertex.x , vertex.y )) {
             //if (poly.containsPoint(vertex.x, vertex.y)) {
-            	if(poly.color == '#e4e4e4')
-                {
-                    if (wonCallback && typeof wonCallback === 'function') 
-                    {
-                        if(rocket.rotation >1.85)handleCollision(vertex.x, vertex.y, particles, scoreElement, resetCallback);
-                        else wonCallback();
+            	if(poly.color == '#e4e4e4') {
+                    if (wonCallback && typeof wonCallback === 'function') {
+                        // Only land if rocket is almost vertical (within ±15 degrees)
+                        if (Math.abs(rocket.rotation) < 0.26) {
+                            wonCallback();
+                        } else {
+                            handleCollision(vertex.x, vertex.y, particles, scoreElement, resetCallback);
+                        }
                     }
                     return;
                 } 
