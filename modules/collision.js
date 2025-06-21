@@ -1,46 +1,23 @@
 import { createCollisionParticles } from './particles.js';
 
 export function checkCollisions(rocket, polygons, particles, scoreElement, resetCallback,wonCallback) {
-    // // Calculate rocket vertices
-    // const vertices = [
-    //     // Nose (top vertex)
-    //     {
-    //         x: rocket.x + Math.sin(rocket.rotation) * (rocket.height/2),
-    //         y: rocket.y - Math.cos(rocket.rotation) * (rocket.height/2)
-    //     },
-    //     // Left wing
-    //     {
-    //         x: rocket.x - Math.cos(rocket.rotation) * (rocket.width/2) - Math.sin(rocket.rotation) * (rocket.height/2),
-    //         y: rocket.y - Math.sin(rocket.rotation) * (rocket.width/2) + Math.cos(rocket.rotation) * (rocket.height/2)
-    //     },
-    //     // Right wing
-    //     {
-    //         x: rocket.x + Math.cos(rocket.rotation) * (rocket.width/2) - Math.sin(rocket.rotation) * (rocket.height/2),
-    //         y: rocket.y + Math.sin(rocket.rotation) * (rocket.width/2) + Math.cos(rocket.rotation) * (rocket.height/2)
-    //     }
     // Calculate rocket vertices
-const cos = Math.cos(rocket.rotation);
-const sin = Math.sin(rocket.rotation);
-const halfWidth = rocket.width / 2;
-const halfHeight = rocket.height / 2;
-
-const vertices = [
-    // Nose (top vertex)
-    {
-        x: rocket.x + sin * halfHeight,
-        y: rocket.y - cos * halfHeight
-    },
-    // Left wing
-    {
-        x: rocket.x - cos * halfWidth - sin * halfHeight,
-        y: rocket.y - sin * halfWidth + cos * halfHeight
-    },
-    // Right wing
-    {
-        x: rocket.x + cos * halfWidth - sin * halfHeight,
-        y: rocket.y + sin * halfWidth + cos * halfHeight
-    }
-
+    const vertices = [
+        // Nose (top vertex)
+        {
+            x: rocket.x + Math.sin(rocket.rotation) * (rocket.height/2),
+            y: rocket.y - Math.cos(rocket.rotation) * (rocket.height/2)
+        },
+        // Left wing
+        {
+            x: rocket.x - Math.cos(rocket.rotation) * (rocket.width/2) - Math.sin(rocket.rotation) * (rocket.height/2),
+            y: rocket.y - Math.sin(rocket.rotation) * (rocket.width/2) + Math.cos(rocket.rotation) * (rocket.height/2)
+        },
+        // Right wing
+        {
+            x: rocket.x + Math.cos(rocket.rotation) * (rocket.width/2) - Math.sin(rocket.rotation) * (rocket.height/2),
+            y: rocket.y + Math.sin(rocket.rotation) * (rocket.width/2) + Math.cos(rocket.rotation) * (rocket.height/2)
+        }
     ];
     
     // Check each polygon against all collision points
