@@ -25,10 +25,12 @@ export function drawParticles(particles, ctx) {
     for (const p of particles) {
         const screenPos = transform(p.x, p.y);
         ctx.save();
+        ctx.translate(screenPos.x, screenPos.y);
+        ctx.scale(camera.scale, camera.scale); // ← apply zoom
         ctx.globalAlpha = 1;
         ctx.fillStyle = lineColor;
         ctx.beginPath();
-        ctx.arc(screenPos.x, screenPos.y, p.size, 0, Math.PI * 2);
+        ctx.arc(0, 0, p.size, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
     }
