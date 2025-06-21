@@ -126,7 +126,7 @@ function render() {
 
 function levelWon() {
     gameRunning = false;
-    startButton.textContent = 'Next Level';
+    //startButton.textContent = 'Next Level';
     // Show custom modal instead of alert
     const modal = document.getElementById('level-modal');
     const message = document.getElementById('level-modal-message');
