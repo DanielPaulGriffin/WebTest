@@ -8,8 +8,11 @@ import { checkCollisions } from './modules/collision.js';
 import { resizeCanvas } from './modules/utils.js';
 import { bgColor } from './modules/colors.js';
 
-// Initialize canvas
+// Initialize camera AFTER canvas setup
 const canvas = document.getElementById('gameCanvas');
+initCamera(canvas.width, canvas.height, rocket, 1.0); // Start with scale 1.0
+// Initialize canvas
+//const canvas = document.getElementById('gameCanvas');
 export const ctx = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
 const startButton = document.getElementById('start-btn');
@@ -23,7 +26,7 @@ initRocket();
 const levels = createPolygons();
 let currentLevel = 0;
 const stars = createStars(300, 4000);
-initCamera(canvas.width, canvas.height, rocket);
+//initCamera(canvas.width, canvas.height, rocket);
 initControls();
 
 // Game state
