@@ -111,15 +111,7 @@ function render() {
     ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transforms
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Apply camera scale and translation
-    ctx.setTransform(
-        camera.scale, 0, 0, camera.scale,
-        -camera.x * camera.scale,
-        -camera.y * camera.scale
-    );
-
-    // Draw everything in world coordinates
-    drawPolygons(levels[(currentLevel+1)%levels.length], ctx);
+    drawPolygons(levels[currentLevel], ctx);
     drawParticles(particles, ctx);
     drawRocket(ctx);
 }

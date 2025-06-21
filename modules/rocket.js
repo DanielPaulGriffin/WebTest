@@ -69,11 +69,12 @@ export function updateRocket(keys, deltaTime) {
 }
 
 export function drawRocket(ctx) {
+    const screenPos = transform(rocket.x, rocket.y);
+
     ctx.save();
-    ctx.translate(rocket.x, rocket.y); // world coordinates
+    ctx.translate(screenPos.x, screenPos.y);
     ctx.rotate(rocket.rotation);
 
-    // Flash red on collision
     if (rocket.colorFlash > 0) {
         ctx.fillStyle = '#ff0000';
         rocket.colorFlash--;
@@ -81,16 +82,17 @@ export function drawRocket(ctx) {
         ctx.fillStyle = lineColor;
     }
 
-    // Draw rocket body
+    // Rocket shape
     ctx.beginPath();
-    ctx.moveTo(0, -rocket.height/2);
-    ctx.lineTo(-rocket.width/2, rocket.height/2);
-    ctx.lineTo(rocket.width/2, rocket.height/2);
+    ctx.moveTo(0, -rocket.height / 2);
+    ctx.lineTo(-rocket.width / 2, rocket.height / 2);
+    ctx.lineTo(rocket.width / 2, rocket.height / 2);
     ctx.closePath();
 
     ctx.strokeStyle = lineColor;
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 2;
     ctx.stroke();
+
     ctx.fillStyle = `rgba(10, 10, 10, 1)`;
     ctx.fill();
 

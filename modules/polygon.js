@@ -1,5 +1,5 @@
 import { lineColor,polyFillColor,bgColor } from './colors.js';
-
+import { transform } from './camera.js';
 // Define the lineColor variable at the top of the file
 //export const lineColor = '#484848';
 //'#484848' - grey
@@ -15,22 +15,22 @@ export class Polygon {
     }
     
     draw(ctx) {
-        ctx.beginPath();
-        // Use world coordinates directly
-        ctx.moveTo(this.points[0].x + this.offset.x, this.points[0].y + this.offset.y);
-        
-        for (let i = 1; i < this.points.length; i++) {
-            ctx.lineTo(this.points[i].x + this.offset.x, this.points[i].y + this.offset.y);
-        }
-        
-        ctx.closePath();
-        ctx.strokeStyle = this.color;
-        ctx.lineWidth = this.lineWidth;
-        ctx.stroke();
-        
-        // Fill polygon
-        ctx.fillStyle = polyFillColor;
-        ctx.fill();
+    ctx.beginPath();
+    const first = transform(this.points[0].x + this.offset.x, this.points[0].y + this.offset.y);
+    ctx.moveTo(first.x, first.y);
+
+    for (let i = 1; i < this.points.length; i++) {
+        const pt = transform(this.points[i].x + this.offset.x, this.points[i].y + this.offset.y);
+        ctx.lineTo(pt.x, pt.y);
+    }
+
+    ctx.closePath();
+    ctx.strokeStyle = this.color;
+    ctx.lineWidth = this.lineWidth;
+    ctx.stroke();
+
+    ctx.fillStyle = polyFillColor;
+    ctx.fill();
     }
     
     containsPoint(x, y) {
