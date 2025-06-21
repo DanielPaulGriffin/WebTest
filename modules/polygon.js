@@ -11,7 +11,7 @@ export class Polygon {
         this.points = points;
         this.color = color;
         this.offset = offset;
-        this.lineWidth = 4;
+        this.lineWidth = 2;
     }
     
     draw(ctx) {
