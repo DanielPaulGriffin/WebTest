@@ -34,8 +34,8 @@ export function updateCameraToBounds(levels,currentLevel,rocket,canvas) {
     const worldW = maxX - minX, worldH = maxY - minY;
 
     // compute scale to fit both in view, with 10% padding
-    const scaleX = canvas.width  / (worldW * 1.1);
-    const scaleY = canvas.height / (worldH * 1.1);
+    const scaleX = canvas.width  / (worldW * 1.5);
+    const scaleY = canvas.height / (worldH * 1.5);
     const newScale = Math.min(scaleX, scaleY);
     setCameraScale(newScale);
 
