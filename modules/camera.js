@@ -15,9 +15,8 @@ export function initCamera(width, height, target, scale = 1) {
     camera.y = target.y - height/2;
     camera.scale = scale; // Initialize scale
 }
-
-export function updateCameraToBounds() {
-    const levelPolys = levels[currentLevel];
+export function updateCameraToBounds(levels) {
+    const levelPolys = levels[(currentLevel+1)%levels.length];
     const pad = levelPolys[levelPolys.length - 1]; // landing pad
     // gather all world‑space points of pad
     const padPoints = pad.points.map(p => ({
@@ -52,11 +51,9 @@ export function updateCamera(target) {
         camera.y = target.y - camera.height / (2 * camera.scale);
     }
 }
-
 export function setCameraScale(scale) {
     camera.scale = scale;
 }
-
 export function transform(x, y) {
     // Apply translation and scaling
     return {
