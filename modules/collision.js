@@ -29,7 +29,8 @@ export function checkCollisions(rocket, polygons, particles, scoreElement, reset
                 {
                     if (wonCallback && typeof wonCallback === 'function') 
                     {
-                        wonCallback();
+                        if(rocket.rotation >1.85)handleCollision(vertex.x, vertex.y, particles, scoreElement, resetCallback);
+                        else wonCallback();
                     }
                     return;
                 } 
