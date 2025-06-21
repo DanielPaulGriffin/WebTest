@@ -18,7 +18,7 @@ export const ctx = canvas.getContext('2d');
 window.addEventListener('resize', () => resizeCanvas(canvas));
 resizeCanvas(canvas);
 
-// Initialize game objects
+// Initialize game objects.
 initRocket();
 const levels = createPolygons();
 let currentLevel = 0;
