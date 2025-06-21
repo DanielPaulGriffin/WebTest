@@ -1,5 +1,5 @@
 //import { camera, transform } from './camera.js';
-import { lineColor } from './modules/colors.js';
+import { lineColor } from './colors.js';
 export const particles = [];
 
 export function createParticles() {
