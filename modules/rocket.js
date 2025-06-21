@@ -1,4 +1,4 @@
-import { transform,setCameraScale } from './camera.js';
+import { camera, transform,setCameraScale } from './camera.js';
 import { lineColor } from './colors.js'; // Add this import
 
 export const rocket = {
@@ -73,6 +73,7 @@ export function drawRocket(ctx) {
 
     ctx.save();
     ctx.translate(screenPos.x, screenPos.y);
+    ctx.scale(camera.scale, camera.scale); // apply zoom only to rocket
     ctx.rotate(rocket.rotation);
 
     if (rocket.colorFlash > 0) {
@@ -82,7 +83,6 @@ export function drawRocket(ctx) {
         ctx.fillStyle = lineColor;
     }
 
-    // Rocket shape
     ctx.beginPath();
     ctx.moveTo(0, -rocket.height / 2);
     ctx.lineTo(-rocket.width / 2, rocket.height / 2);
@@ -90,7 +90,7 @@ export function drawRocket(ctx) {
     ctx.closePath();
 
     ctx.strokeStyle = lineColor;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 2 / camera.scale; // keep stroke thickness constant
     ctx.stroke();
 
     ctx.fillStyle = `rgba(10, 10, 10, 1)`;
