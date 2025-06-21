@@ -100,7 +100,7 @@ function render() {
     );
 
     // Draw everything in world coordinates
-    drawPolygons(levels[currentLevel], ctx);
+    drawPolygons(levels[(currentLevel+1)%levels.length], ctx);
     drawParticles(particles, ctx);
     drawRocket(ctx);
 }
