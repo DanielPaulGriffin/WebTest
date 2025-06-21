@@ -1,7 +1,7 @@
 import { createCollisionParticles } from './particles.js';
 
-export function checkCollisions(rocket, polygons, particles, scoreElement, resetCallback, wonCallback) {
-    // Calculate rocket vertices in world coordinates
+export function checkCollisions(rocket, polygons, particles, scoreElement, resetCallback,wonCallback) {
+    // Calculate rocket vertices
     const vertices = [
         // Nose (top vertex)
         {
@@ -19,20 +19,36 @@ export function checkCollisions(rocket, polygons, particles, scoreElement, reset
             y: rocket.y + Math.sin(rocket.rotation) * (rocket.width/2) + Math.cos(rocket.rotation) * (rocket.height/2)
         }
     ];
+    
+    // // Check each polygon against all collision points
+    // for (const poly of polygons) {
+    //     for (const vertex of vertices) {
+    //         if (poly.containsPoint(vertex.x, vertex.y)) {
+    //         	if(poly.color == '#e4e4e4')
+    //             {
+    //                 if (wonCallback && typeof wonCallback === 'function') 
+    //                 {
+    //                     wonCallback();
+    //                 }
+    //                 return;
+    //             } 
+    //             handleCollision(vertex.x, vertex.y, particles, scoreElement, resetCallback);
+    //             return; // Only handle one collision per frame
+    //         }
+    //     }
+    // }
 
-    // Check each polygon against all rocket vertices
-    for (const poly of polygons) {
-        for (const vertex of vertices) {
-            if (poly.containsPoint(vertex.x, vertex.y)) {
-                if (poly.color == '#e4e4e4') {
-                    if (wonCallback && typeof wonCallback === 'function') {
-                        wonCallback();
-                    }
-                    return;
+    // Correct: use world coordinates directly
+    for (const polygon of polygons) {
+        if (polygon.containsPoint(rocket.x, rocket.y)) {
+            if (polygon.color == '#e4e4e4') {
+                if (wonCallback && typeof wonCallback === 'function') {
+                    wonCallback();
                 }
-                handleCollision(vertex.x, vertex.y, particles, scoreElement, resetCallback);
-                return; // Only handle one collision per frame
+                return;
             }
+            handleCollision(rocket.x, rocket.y, particles, scoreElement, resetCallback);
+            return; // Only handle one collision per frame
         }
     }
 }
